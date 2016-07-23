@@ -14,8 +14,6 @@ RUN unzip consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip && \
     mkdir -p /consul-template /consul-template/config.d /consul-template/templates
 
 ADD templates/containers.ctmpl /consul-template/templates/
-ADD scripts/create-certificates.sh /usr/bin/
-RUN chmod +x /usr/bin/create-certificates.sh
 
 ENTRYPOINT []
-CMD /usr/local/bin/consul-template -consul $CONSUL_CONNECT -template '/consul-template/templates/containers.ctmpl:/tmp/containers:/usr/bin/create-certificates.sh'
+CMD /usr/local/bin/consul-template -consul $CONSUL_CONNECT -template '/consul-template/templates/containers.ctmpl:/tmp/containers:sh /tmp/containers'

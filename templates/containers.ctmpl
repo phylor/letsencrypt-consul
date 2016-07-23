@@ -1,2 +1,17 @@
+#!/bin/sh
+
+server=$FQDN
+
 {{ range services }}{{ if in .Tags (env "FQDN") }}{{.Name}}
+    fqdn="{{.Name}}.$server"
+
+    echo -n "$fqdn"
+
+    if [ ! -f /etc/letsencrypt/live/$fqdn/{fullchain.pem,privkey.pem} ]; then
+        echo " creating.."
+        certbot auth --non-interactive --text -a standalone --agree-tos --email $EMAIL --standalone-supported-challenges http-01 -d $fqdn && \
+        cat /etc/letsencrypt/live/$fqdn/fullchain.pem /etc/letsencrypt/live/$fqdn/privkey.pem > /certificates/$fqdn.pem
+    else
+        echo " exists"
+    fi
 {{end}}{{end}}
