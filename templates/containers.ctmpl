@@ -1,0 +1,2 @@
+{{ range services }}{{ if in .Tags (env "FQDN") }}{{.Name}}
+{{end}}{{end}}
