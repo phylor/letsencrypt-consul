@@ -1,6 +1,6 @@
 # Letsencrypt for Consul
 
-- External requests from letsencrypt need to be proxied to the port specified in the mapping
+External requests from letsencrypt need to be proxied to the port specified in the mapping
 
 
     docker run \
