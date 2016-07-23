@@ -5,10 +5,8 @@ server=$(hostname -f)
 echo "Creating certificates for server $server"
 mkdir -p /certificates
 
-IFS=$'\n'
-set -f
-for name in $(cat "/tmp/containers"); do
-    fqdn="$name.$server"
+grep -v -e '^$' /tmp/containers | tr '\n' '\0' | xargs -0 -n1 sh -c 'echo "$0.$(hostname -f)"' | xargs -n1 sh -c '
+    fqdn="$0.$server"
 
     echo -n "$fqdn"
 
@@ -19,4 +17,4 @@ for name in $(cat "/tmp/containers"); do
     else
         echo " exists"
     fi
-done
+'
