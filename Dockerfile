@@ -17,4 +17,5 @@ ADD templates/containers.ctmpl /consul-template/templates/
 ADD scripts/create-certificates.sh /usr/bin/
 RUN chmod +x /usr/bin/create-certificates.sh
 
+ENTRYPOINT []
 CMD ["/usr/local/bin/consul-template", "-consul", "$CONSUL_CONNECT", "-template", "/consul-template/templates/containers.ctmpl:/tmp/containers:/usr/bin/create-certificates.sh"]
